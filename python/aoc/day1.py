@@ -1,4 +1,4 @@
-def reduce(number_string: str) -> int:
+def part1(number_string: str) -> int:
     """Counts repeating numbers"""
     first_num: int = int(number_string[0])
     prev_num: int = None
@@ -20,4 +20,4 @@ def reduce(number_string: str) -> int:
 if __name__ == "__main__":
     string = input("Captcha sequence: ")
 
-    print(reduce(string))
+    print(part1(string))
