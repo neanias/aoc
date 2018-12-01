@@ -1,6 +1,6 @@
-# Advent of Code 2017
+# Advents of Code
 
-My attempt at the Advent of Code (AOC) event for 2017. It's currently implemented in Python, but I hope
-to be adding more languages to it as the month goes on.
+My attempts at the [Advent of Code (AOC)](https://adventofcode.com) over the years. It's hopefully
+implemented in various languages.
 
 See language folders for specific installation instructions.
