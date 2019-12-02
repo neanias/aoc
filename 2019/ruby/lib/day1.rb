@@ -13,9 +13,9 @@ class Day1
     @masses.sum do |mass|
       main_fuel = calculate_fuel_needed(mass)
       self_fuel = main_fuel
-      until self_fuel < 0
+      until self_fuel.negative?
         self_fuel = calculate_fuel_needed(self_fuel)
-        main_fuel += self_fuel if self_fuel > 0
+        main_fuel += self_fuel if self_fuel.positive?
       end
 
       main_fuel
