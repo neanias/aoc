@@ -40,7 +40,6 @@ class Day7
   private
 
   def dig(key)
-    return 0 if @bag_rules[key].empty?
     @bag_rules[key].sum do |k, v|
       v + v * dig(k)
     end
