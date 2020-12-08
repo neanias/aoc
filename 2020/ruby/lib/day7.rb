@@ -18,19 +18,19 @@ class Day7
 
   # This could probably be simplified now
   def part_1
-    shiny_gold = Set.new([SHINY_GOLD])
+    nodes = Set.new([SHINY_GOLD])
     growing = true
-    size = shiny_gold.size
+    size = nodes.size
 
     while growing
       @bag_rules.each do |key, bags|
-        shiny_gold.add(key) if bags.keys.to_set.intersect?(shiny_gold)
+        nodes.add(key) if bags.keys.to_set.intersect?(nodes)
       end
-      growing = size != shiny_gold.size
-      size = shiny_gold.size
+      growing = size != nodes.size
+      size = nodes.size
     end
 
-    shiny_gold.size - 1
+    nodes.size - 1
   end
 
   def part_2
