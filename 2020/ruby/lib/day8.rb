@@ -42,7 +42,6 @@ class Day8
         puts "FOUND #{sum}"
         break
       end
-      break if line_numbers.include?(line)
       op, num = programme[line]
       line_numbers.add(line)
       if op == "nop"
