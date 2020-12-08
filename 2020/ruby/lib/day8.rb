@@ -11,7 +11,7 @@ class Day8
   end
 
   def part_1
-    executor(@programme.reject { |op| op[0] == "nop" })
+    computer(@programme.reject { |op| op[0] == "nop" })[0]
   end
 
   def part_2
@@ -21,26 +21,27 @@ class Day8
       nop_jmp_lines.add(idx)
     end
 
-    nop_jmp_lines.each do |index|
+    swapped_line = nop_jmp_lines.find do |index|
       next if @programme[index] == ["nop", 0]
       new_prog = swap_op(@programme, index)
-      puts executor(new_prog)
+      computer(new_prog)[-1]
     end
+
+    computer(swap_op(@programme, swapped_line))[0]
   end
 
   private
 
-  def executor(programme = @programme)
+  def computer(programme)
     line_numbers = Set.new
     sum = 0
     line = 0
 
     loop do
       if line_numbers.include?(line)
-        break
+        return [sum, false]
       elsif line == programme.size
-        puts "FOUND #{sum}"
-        break
+        return [sum, true]
       end
       op, num = programme[line]
       line_numbers.add(line)
@@ -53,8 +54,6 @@ class Day8
         line += num
       end
     end
-
-    sum
   end
 
   def swap_op(arr, index)
