@@ -19,7 +19,7 @@ class Day9
       last_index = found - 1 if found
     end
 
-    @numbers[first_index..last_index].sort.minmax.sum
+    @numbers[first_index..last_index].minmax.sum
   end
 
   private
