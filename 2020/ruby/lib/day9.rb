@@ -27,8 +27,6 @@ class Day9
   def search(idx, goal, acc = 0)
     return idx if acc == goal
     return nil if acc > goal
-    num = @numbers[idx]
-    new_index = idx + 1
-    search(new_index, goal, acc + num)
+    search(idx + 1, goal, acc + @numbers[idx])
   end
 end
