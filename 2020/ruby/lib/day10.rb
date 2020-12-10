@@ -4,14 +4,14 @@ class Day10
   def initialize(adapters_file)
     @adapters = File.readlines(adapters_file, chomp: true).map(&:to_i).sort
     @target_joltage = @adapters.max + 3
+    @adapters.prepend(0).append(@target_joltage)
     @arrangements = 0
   end
 
   def part_1
     joltage = 0
     jolt_difference = Hash.new(0)
-    [*@adapters, @target_joltage].each do |adapter|
-      break if joltage == @target_joltage
+    @adapters.each do |adapter|
       old_joltage = joltage
       if joltage >= (adapter - 3) && joltage < adapter
         joltage = adapter
@@ -23,23 +23,23 @@ class Day10
   end
 
   def part_2
-    @arrangements = 0
-    joltages = [0, *@adapters].lazy.each_with_object({}) { |n, h| h[n] = [n + 1, n + 2, n + 3] }
-    search(joltages, 0)
-    @arrangements
+    @adapters.lazy.chunk_while { _2 - _1 != 3 }.map do |seq|
+      if seq.size <= 2
+        1
+      else
+        choose = seq.size - 2
+        coefficient(choose, 2) + coefficient(choose, 1) + 1
+      end
+    end.reduce(:*)
   end
 
   private
 
-  def search(joltages, key)
-    return if key == (@target_joltage - 3)
-    return unless joltages.key?(key)
-    joltages[key].each do |number|
-      if number == (@target_joltage - 3)
-        @arrangements += 1
-        return true
-      end
-      search(joltages, number)
-    end
+  def coefficient(n, k)
+    return 0 if n < k
+    fact = ->(x) { (1..x).reduce(:*) || 1 }
+    n_bang = fact.call(n)
+    k_bang = fact.call(k)
+    (n_bang / (k_bang * fact.call(n - k)))
   end
 end

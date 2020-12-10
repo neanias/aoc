@@ -12,7 +12,7 @@ RSpec.describe Day10 do
     end
   end
 
-  describe "#part_1" do
+  describe "#part_2" do
     it "calculates the number of arrangements" do
       expect(day_10.part_2).to eq(19208)
     end
