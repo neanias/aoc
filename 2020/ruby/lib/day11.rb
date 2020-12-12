@@ -5,7 +5,6 @@ require "set"
 class Day11
   def initialize(waiting_room_file)
     @waiting_room = File.readlines(waiting_room_file, chomp: true).map { _1.split("") }
-    @occupied = Marshal.load(Marshal.dump(@waiting_room))
   end
 
   def part_1
@@ -49,18 +48,14 @@ class Day11
       changing = false
       waiting_room.each_with_index do |row, i|
         row.each_with_index do |pos, j|
-          paths = axis(i, j, row).merge(diagonals(i, j, row))
-          free_seats = paths.values.map do |coords_arr|
-            coords = coords_arr.find do |x, y|
-              space = waiting_room[x][y]
-              !space.nil? && !is_floor?(space)
-            end
-            waiting_room[coords[0]][coords[1]] if coords
-          end.tally
-          if is_chair?(pos) && free_seats.fetch("#", 0) == 0
+          seats = (axis(i, j, waiting_room) + diagonals(i, j, waiting_room))
+            .reject(&:nil?)
+            .map { waiting_room[_1][_2] }
+            .tally
+          if is_chair?(pos) && seats.fetch("#", 0) == 0
             occupied[i][j] = "#"
             changing = true
-          elsif is_taken?(pos) && free_seats.fetch("#", 0) >= 5
+          elsif is_taken?(pos) && seats.fetch("#", 0) >= 5
             occupied[i][j] = "L"
             changing = true
           end
@@ -108,29 +103,37 @@ class Day11
     index_pair.difference([[row, pos]]).map { |row_idx, pos_idx| chairs[row_idx][pos_idx] }
   end
 
-  def axis(row, pos, chairs = @waiting_room[0])
-    default_hash = Hash.new { |h, k| h[k] = [] }
+  def axis(row, pos, chairs = @waiting_room)
+    chair_row = chairs[row]
 
-    {
-      n: row.downto(0).lazy.zip([pos].cycle),
-      e: pos.upto(chairs.size - 1).lazy.zip([row].cycle).map(&:reverse),
-      s: row.upto(chairs.size - 1).lazy.zip([pos].cycle),
-      w: pos.downto(0).lazy.zip([row].cycle).map(&:reverse),
-    }.each_with_object(default_hash) do |pair, hash|
-      hash[pair[0]] = pair[1].select(&:all?).to_a.difference([[row, pos]])
+    [
+      row.downto(0).lazy.zip([pos].cycle),
+      pos.upto(chair_row.size - 1).lazy.zip([row].cycle).map(&:reverse),
+      row.upto(chair_row.size - 1).lazy.zip([pos].cycle),
+      pos.downto(0).lazy.zip([row].cycle).map(&:reverse),
+    ].map do |coords_enum|
+      coords_enum.find do |x, y|
+        next if (x == row && y == pos) || ![x, y].all?
+        space = chairs[x][y]
+        !space.nil? && !is_floor?(space)
+      end
     end
   end
 
-  def diagonals(row, pos, chairs = @waiting_room[0])
-    default_hash = Hash.new { |h, k| h[k] = [] }
+  def diagonals(row, pos, chairs = @waiting_room)
+    chair_row = chairs[row]
 
-    {
-      nw: row.downto(0).lazy.zip(pos.downto(0)),
-      ne: row.downto(0).lazy.zip(pos.upto(chairs.size - 1)),
-      sw: row.upto(chairs.size - 1).lazy.zip(pos.downto(0)),
-      se: row.upto(chairs.size - 1).lazy.zip(pos.upto(chairs.size - 1)),
-    }.each_with_object(default_hash) do |pair, hash|
-      hash[pair[0]] = pair[1].select(&:all?).to_a.difference([[row, pos]])
+    [
+      row.downto(0).lazy.zip(pos.downto(0)),
+      row.downto(0).lazy.zip(pos.upto(chair_row.size - 1)),
+      row.upto(chair_row.size - 1).lazy.zip(pos.downto(0)),
+      row.upto(chair_row.size - 1).lazy.zip(pos.upto(chair_row.size - 1)),
+    ].map do |coords_enum|
+      coords_enum.find do |x, y|
+        next if (x == row && y == pos) || ![x, y].all?
+        space = chairs[x][y]
+        !space.nil? && !is_floor?(space)
+      end
     end
   end
 end
