@@ -11,11 +11,9 @@ class Day11
     waiting_room = deep_dup(@waiting_room)
     occupied = deep_dup(waiting_room)
     changing = true
-    iteration = 0
 
     while changing
       changing = false
-      puts "Iteration #{iteration}"
 
       waiting_room.each_with_index do |row, i|
         row.each_with_index do |pos, j|
@@ -30,7 +28,6 @@ class Day11
       end
 
       waiting_room = deep_dup(occupied)
-      iteration += 1
     end
 
     waiting_room.sum { |row| row.count { |spot| is_taken?(spot) } }
@@ -40,11 +37,8 @@ class Day11
     waiting_room = deep_dup(@waiting_room)
     occupied = deep_dup(waiting_room)
     changing = true
-    iteration = 0
 
     while changing
-      puts "Iteration #{iteration}"
-
       changing = false
       waiting_room.each_with_index do |row, i|
         row.each_with_index do |pos, j|
@@ -63,7 +57,6 @@ class Day11
       end
 
       waiting_room = deep_dup(occupied)
-      iteration += 1
     end
 
     waiting_room.sum { |row| row.count { |spot| is_taken?(spot) } }
@@ -104,12 +97,10 @@ class Day11
   end
 
   def axis(row, pos, chairs = @waiting_room)
-    chair_row = chairs[row]
-
     [
       row.downto(0).lazy.zip([pos].cycle),
-      pos.upto(chair_row.size - 1).lazy.zip([row].cycle).map(&:reverse),
-      row.upto(chair_row.size - 1).lazy.zip([pos].cycle),
+      pos.upto(chairs.size - 1).lazy.zip([row].cycle).map(&:reverse),
+      row.upto(chairs.size - 1).lazy.zip([pos].cycle),
       pos.downto(0).lazy.zip([row].cycle).map(&:reverse),
     ].map do |coords_enum|
       coords_enum.find do |x, y|
@@ -121,13 +112,11 @@ class Day11
   end
 
   def diagonals(row, pos, chairs = @waiting_room)
-    chair_row = chairs[row]
-
     [
       row.downto(0).lazy.zip(pos.downto(0)),
-      row.downto(0).lazy.zip(pos.upto(chair_row.size - 1)),
-      row.upto(chair_row.size - 1).lazy.zip(pos.downto(0)),
-      row.upto(chair_row.size - 1).lazy.zip(pos.upto(chair_row.size - 1)),
+      row.downto(0).lazy.zip(pos.upto(chairs.size - 1)),
+      row.upto(chairs.size - 1).lazy.zip(pos.downto(0)),
+      row.upto(chairs.size - 1).lazy.zip(pos.upto(chairs.size - 1)),
     ].map do |coords_enum|
       coords_enum.find do |x, y|
         next if (x == row && y == pos) || ![x, y].all?
