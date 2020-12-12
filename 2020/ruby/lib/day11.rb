@@ -51,7 +51,10 @@ class Day11
         row.each_with_index do |pos, j|
           paths = axis(i, j, row).merge(diagonals(i, j, row))
           free_seats = paths.values.map do |coords_arr|
-            coords = coords_arr.find { |x, y| !is_floor?(waiting_room[x][y]) }
+            coords = coords_arr.find do |x, y|
+              space = waiting_room[x][y]
+              !space.nil? && !is_floor?(space)
+            end
             waiting_room[coords[0]][coords[1]] if coords
           end.tally
           if is_chair?(pos) && free_seats.fetch("#", 0) == 0
