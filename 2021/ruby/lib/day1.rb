@@ -6,10 +6,16 @@ class Day1
   end
 
   def part_one
-    @readings.lazy.each_cons(2).count { |lhs, rhs| rhs > lhs }
+    @readings.lazy.then(&method(:count_increasing_slices))
   end
 
   def part_two
-    @readings.lazy.each_cons(3).map(&:sum).each_cons(2).count { |lhs, rhs| rhs > lhs }
+    @readings.lazy.each_cons(3).map(&:sum).then(&method(:count_increasing_slices))
+  end
+
+  private
+
+  def count_increasing_slices(depths)
+    depths.each_cons(2).count { |lhs, rhs| rhs > lhs }
   end
 end
