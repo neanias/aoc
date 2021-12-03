@@ -16,36 +16,20 @@ class Day3
   end
 
   def part_two
-    pp @max_per_column, @min_per_column
-    oxygen_rating = rating2(@diagnostics, @max_per_column, direction: 1)
-    p oxygen_rating
-    co2_rating = rating2(@diagnostics, @min_per_column)
-    p co2_rating
+    oxygen_rating = rating(@diagnostics, direction: 1)
+    co2_rating = rating(@diagnostics)
     oxygen_rating * co2_rating
   end
 
   private
 
-  def rating(column_bits)
-    arr = column_bits.each_with_index.reduce(@diagnostics) do |diagnostics, column_idx|
-      break diagnostics if diagnostics.length == 1
-
-      column, idx = column_idx
-      darr = diagnostics.select { |diagnostic| diagnostic[idx] == column }
-      pp darr
-      darr
-    end
-    arr[0].to_i(2)
-  end
-
-  def rating2(diagnostics, column_bits, idx = 0, direction: 0)
+  def rating(diagnostics, idx: 0, direction: 0)
     return diagnostics[0].to_i(2) if diagnostics.length == 1
 
+    column_bits = minmax_of_columns(columns(diagnostics))[direction]
     reduced_diagnostics = diagnostics.select { |diagnostic| diagnostic[idx] == column_bits[idx] }
-    pp reduced_diagnostics
-    new_column_bits = minmax_of_columns(columns(reduced_diagnostics))[direction]
-    pp new_column_bits
-    rating2(reduced_diagnostics, new_column_bits, idx + 1, direction: direction)
+
+    rating(reduced_diagnostics, idx: idx + 1, direction: direction)
   end
 
   def columns(diagnostics)
@@ -53,6 +37,6 @@ class Day3
   end
 
   def minmax_of_columns(columns)
-    columns.lazy.map(&:tally).map { _1.lazy.sort.minmax_by(&:last).map(&:first) }.to_a.transpose
+    columns.lazy.map(&:tally).map { _1.minmax_by(&:reverse).map(&:first) }.to_a.transpose
   end
 end
