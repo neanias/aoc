@@ -10,7 +10,13 @@ describe Day5 do
 
   describe "#part_one" do
     it "calculates the lines that overlap" do
-      expect(day_three.part_one).to eq(5)
+      expect(day_five.part_one).to eq(5)
+    end
+  end
+
+  describe "#part_two" do
+    it "calculates the lines that overlap including diagonals" do
+      expect(day_five.part_two).to eq(12)
     end
   end
 end
