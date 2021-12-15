@@ -34,4 +34,29 @@ class Day14
     counts[@template[-1]] += 1
     counts.values.minmax.reverse.reduce(:-)
   end
+
+  def part_two
+    chars = @template.chars.each_cons(2).tally
+    chars.default = 0
+
+    40.times do
+      output_chars = Hash.new(0)
+
+      @rules.each do |rule, (left_pair, right_pair)|
+        if chars.key?(rule)
+          output_chars[left_pair] += chars[rule]
+          output_chars[right_pair] += chars[rule]
+        end
+      end
+
+      chars = output_chars
+    end
+
+    counts = chars.each_with_object(Hash.new(0)) do |((lhs, _), count), hash|
+      hash[lhs] += count
+    end
+
+    counts[@template[-1]] += 1
+    counts.values.minmax.reverse.reduce(:-)
+  end
 end

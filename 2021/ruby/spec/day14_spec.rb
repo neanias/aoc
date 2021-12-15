@@ -13,4 +13,10 @@ describe Day14 do
       expect(day_fourteen.part_one).to eq(1588)
     end
   end
+
+  describe "#part_two" do
+    it "subtracts the largest and smallest" do
+      expect(day_fourteen.part_two).to eq(2_188_189_693_529)
+    end
+  end
 end
