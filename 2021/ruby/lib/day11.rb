@@ -15,21 +15,18 @@ class Day11
     100.times do
       flashing = {}
 
-      0.upto(octo.row_count - 1) do |row|
-        0.upto(octo.column_count - 1) do |col|
-          new_val = octo[row, col] += 1
-          next if new_val <= 9
+      octo.each_with_index do |elem, row, col|
+        octo[row, col] = elem + 1
 
-          flashing.store([row, col], true)
-        end
+        flashing.store([row, col], true) if elem + 1 > 9
       end
 
-      until flashing.values.all? { _1 == false }
-        flashing.select { |_, v| v == true }.each_key do |(row, col)|
-          flashing[[row, col]] = false
-          octo[row, col] = 0
+      while flashing.values.any?
+        flashing.select { |_, v| v == true }.each_key do |pos|
+          flashing[pos] = false
+          octo[*pos] = 0
 
-          neighbours(row, col, octo) do |neighbour|
+          neighbours(*pos, octo) do |neighbour|
             next if flashing.key?(neighbour)
 
             new_val = octo[*neighbour] += 1
@@ -51,21 +48,18 @@ class Day11
     until octo.zero?
       flashing = {}
 
-      0.upto(octo.row_count - 1) do |row|
-        0.upto(octo.column_count - 1) do |col|
-          new_val = octo[row, col] += 1
-          next if new_val <= 9
+      octo.each_with_index do |elem, row, col|
+        octo[row, col] = elem + 1
 
-          flashing.store([row, col], true)
-        end
+        flashing.store([row, col], true) if elem + 1 > 9
       end
 
-      until flashing.values.all? { _1 == false }
-        flashing.select { |_, v| v == true }.each_key do |(row, col)|
-          flashing[[row, col]] = false
-          octo[row, col] = 0
+      while flashing.values.any?
+        flashing.select { |_, v| v == true }.each_key do |pos|
+          flashing[pos] = false
+          octo[*pos] = 0
 
-          neighbours(row, col, octo) do |neighbour|
+          neighbours(*pos, octo) do |neighbour|
             next if flashing.key?(neighbour)
 
             new_val = octo[*neighbour] += 1
