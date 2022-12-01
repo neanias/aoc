@@ -1,0 +1,7 @@
+{
+  "lspconfig": {
+    "sorbet": {
+      "cmd": ["bin/src", "tc", "--lsp"]
+    }
+  }
+}
