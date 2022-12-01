@@ -1,0 +1,7 @@
+class Day1
+  @calories: Array[Integer]
+
+  def initialize: (String) -> void
+  def part_one: () -> Integer
+  def part_two: () -> Integer
+end
