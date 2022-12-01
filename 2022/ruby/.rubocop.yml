@@ -16,7 +16,9 @@ AllCops:
   Exclude:
     - 'bin/**'
     - 'spec/spec_helper.rb'
+    - 'Steepfile'
   TargetRubyVersion: 3.0
+  NewCops: enable
 
 #################### Lint ################################
 
@@ -89,10 +91,6 @@ Layout/EndAlignment:
   Description: 'Align ends correctly.'
   Enabled: true
   EnforcedStyleAlignWith: variable
-
-Style/EndBlock:
-  Description: 'END blocks should not be placed inside method definitions.'
-  Enabled: true
 
 Lint/EnsureReturn:
   Description: 'Do not use return in an ensure block.'
@@ -1432,7 +1430,7 @@ Style/YodaCondition:
   EnforcedStyle: forbid_for_all_comparison_operators
 
 # Supports --auto-correct
-FactoryBot/AttributeDefinedStatically:
+RSpec/FactoryBot/AttributeDefinedStatically:
   Description: Always declare attribute values as blocks.
   Enabled: true
   StyleGuide: https://www.rubydoc.info/gems/rubocop-rspec/RuboCop/Cop/RSpec/FactoryBot/AttributeDefinedStatically
