@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'day2'
-require 'spec_helper'
+require "day2"
+require "spec_helper"
 
 describe Day2 do
   subject(:day_two) { described_class.new(problem_input) }
