@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "pp"
-
 class Day2
   MOVE_MAPPING = {
     "X" => 1,
