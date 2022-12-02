@@ -9,6 +9,7 @@ gem "rspec", "~> 3.12.0", require: false
 gem "rubocop", "~> 1.39.0", require: false
 gem "rubocop-performance", "~> 1.15.0", require: false
 gem "rubocop-rspec", "~> 2.15.0", require: false
+gem "rubocop-sorbet", "~> 0.6.11", require: false
 
 gem "sorbet", group: :development
 gem "sorbet-runtime"
