@@ -8,13 +8,13 @@ class Day2
 
   Strategy = T.type_alias { T::Array[T::Array[String]] }
 
-  MOVE_MAPPING = {
+  MOVE_MAPPING = T.let({
     "X" => 1,
     "Y" => 2,
     "Z" => 3
-  }.freeze
+  }.freeze, T::Hash[String, Integer])
 
-  SCORE_MAPPING = {
+  SCORE_MAPPING = T.let({
     "X" => {
       "A" => 3,
       "B" => 0,
@@ -30,9 +30,9 @@ class Day2
       "B" => 6,
       "C" => 3,
     }
-  }.freeze
+  }.freeze, T::Hash[String, T::Hash[String, Integer]])
 
-  REQUIRED_MOVE = {
+  REQUIRED_MOVE = T.let({
     "A" => {
       "X" => "Z",
       "Y" => "X",
@@ -48,7 +48,7 @@ class Day2
       "Y" => "Z",
       "Z" => "X",
     }
-  }.freeze
+  }.freeze, T::Hash[String, T::Hash[String, String]])
 
   sig { params(strategy_file: String).void }
   def initialize(strategy_file)
@@ -62,7 +62,10 @@ class Day2
 
   sig { returns(Integer) }
   def part_two
-    new_moves = @strategy.map { |elf, you| [elf, REQUIRED_MOVE[elf][you]] }
+    new_moves = T.cast(
+      @strategy.map { |elf, you| [elf, T.must(REQUIRED_MOVE[T.must(elf)])[T.must(you)]] },
+      T::Array[T::Array[String]]
+    )
     move_scorer(new_moves)
   end
 
@@ -70,7 +73,7 @@ class Day2
 
   sig { params(strategy: Strategy).returns(Integer) }
   def move_scorer(strategy)
-    score = strategy.sum { |_, move| MOVE_MAPPING[move] }
-    score + strategy.sum { |elf, you| SCORE_MAPPING[you][elf] }
+    score = strategy.sum { |_, move| MOVE_MAPPING[T.must(move)] }
+    T.must(score) + T.cast(strategy.sum { |elf, you| T.must(SCORE_MAPPING[T.must(you)])[T.must(elf)] }, Integer)
   end
 end
