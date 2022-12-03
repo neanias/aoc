@@ -1,30 +1,42 @@
 # typed: true
 # frozen_string_literal: true
 
+require "sorbet-runtime"
+
 class Day3
+  extend T::Sig
+
+  sig { params(item_file: String).void }
   def initialize(item_file)
-    @rucksacks = File.readlines(item_file, chomp: true)
+    @rucksacks = T.let(File.readlines(item_file, chomp: true), T::Array[String])
   end
 
+  sig { returns(Integer) }
   def part_one
     @rucksacks.sum do |rucksack|
       contents = rucksack.chars
       size = contents.length
-      lhs = contents[...size/2]
-      rhs = contents[size/2..]
-      lhs.intersection(rhs).map { calculate_priority(_1) }.first
+      lhs = T.must(contents[...size/2])
+      rhs = T.must(contents[size/2..])
+      T.must(lhs.intersection(rhs).map { calculate_priority(_1) }.first)
     end
   end
 
+  sig { returns(Integer) }
   def part_two
     @rucksacks.each_slice(3).sum do |group|
       chars = group.map(&:chars)
-      (chars[0] & chars[1] & chars[2]).map { calculate_priority(_1) }.first
+      T.must(
+        T.cast(
+          (chars[0] & T.must(chars[1]) & T.must(chars[2])), T::Array[String]
+        ).map { calculate_priority(_1) }.first
+      )
     end
   end
 
   private
 
+  sig { params(char: String).returns(Integer) }
   def calculate_priority(char)
     if char in ("a".."z")
       (char.ord % 97) + 1
