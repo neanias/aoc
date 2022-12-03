@@ -16,8 +16,8 @@ class Day3
     @rucksacks.sum do |rucksack|
       contents = rucksack.chars
       size = contents.length
-      lhs = T.must(contents[...size/2])
-      rhs = T.must(contents[size/2..])
+      lhs = T.must(contents.take(size/2))
+      rhs = T.must(contents.drop(size/2))
       T.must(lhs.intersection(rhs).map { calculate_priority(_1) }.first)
     end
   end
