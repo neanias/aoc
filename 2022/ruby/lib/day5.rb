@@ -27,21 +27,22 @@ class Day5
 
   sig { returns(String) }
   def part_one
-    cargo_columns = @cargo_columns.dup
-    @instructions.each do |(num, from, to)|
-      crates = T.must(cargo_columns[from.to_i - 1]).shift(num.to_i)
-      cargo_columns[to.to_i - 1].unshift(*crates.reverse)
-    end
-
-    cargo_columns.map { |col| T.must(col.first).delete("[]") }.join
+    sort_crates(reverse: true)
   end
 
   sig { returns(String) }
   def part_two
+    sort_crates(reverse: false)
+  end
+
+  private
+
+  sig { params(reverse: T::Boolean).returns(String) }
+  def sort_crates(reverse:)
     cargo_columns = @cargo_columns.dup
     @instructions.each do |(num, from, to)|
       crates = T.must(cargo_columns[from.to_i - 1]).shift(num.to_i)
-      cargo_columns[to.to_i - 1].unshift(*crates)
+      cargo_columns[to.to_i - 1].unshift(*(reverse ? crates.reverse : crates))
     end
 
     cargo_columns.map { |col| T.must(col.first).delete("[]") }.join
