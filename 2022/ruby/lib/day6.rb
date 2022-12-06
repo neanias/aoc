@@ -7,7 +7,7 @@ class Day6
   extend T::Sig
 
   def initialize(signal_file)
-    @signal = File.read(signal_file).strip
+    @signal = T.let(File.read(signal_file).strip, String)
   end
 
   sig { returns(Integer) }
@@ -24,15 +24,8 @@ class Day6
 
   sig { params(size: Integer).returns(Integer) }
   def find_marker(size)
-    count = 0
-    @signal.chars.each_cons(size).each do |substr|
-      if substr.uniq.size == size
-        count += size
-        break
-      end
-      count += 1
+    @signal.chars.each_cons(size).with_index do |substr, i|
+      return i + size if substr.uniq.size == size
     end
-
-    count
   end
 end
