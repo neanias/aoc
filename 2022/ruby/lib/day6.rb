@@ -3,7 +3,7 @@
 
 class Day6
   def initialize(signal_file)
-    @signal = File.readlines(signal_file, chomp: true).first
+    @signal = File.read(signal_file).strip
   end
 
   def part_one
