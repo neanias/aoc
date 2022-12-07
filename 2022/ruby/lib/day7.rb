@@ -1,13 +1,9 @@
 # typed: true
 # frozen_string_literal: true
 
-require "set"
-
 class Node
   attr_reader :name, :children
-  attr_accessor :parent
-  attr_accessor :size
-  attr_accessor :file
+  attr_accessor :parent, :size, :file
 
   def initialize(name:)
     @name = name
@@ -35,6 +31,7 @@ class Node
 
   def insert(node)
     return unless dir?
+
     node.parent = self
     @children.push(node)
     @size += node.size
@@ -60,9 +57,9 @@ class Day7
 
     node = @root_node
     @command_lines.each do |line|
-      if line == "$ ls"
-        next
-      elsif line == "$ cd .."
+      next if line == "$ ls"
+
+      if line == "$ cd .."
         node = node.parent
         node.size = node.children.sum(&:size)
         next
@@ -102,7 +99,7 @@ class Day7
   def collect_children(node, check, dirs = [])
     if node.dir?
       dirs.push(node.size) if check.call(node)
-      node.children.reduce(dirs) { collect_children(_2, check, _1) }
+      node.children.each_with_object(dirs) { |child, arr| collect_children(child, check, arr) }
     else
       dirs
     end
