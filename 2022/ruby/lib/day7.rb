@@ -1,23 +1,33 @@
 # typed: true
 # frozen_string_literal: true
 
+require "sorbet-runtime"
+
 class Node
-  attr_reader :name, :children
+  extend T::Sig
+
+  sig { returns(String) }
+  attr_reader :name
+  sig { returns(T::Array[Node]) }
+  attr_reader :children
+
   attr_accessor :parent, :size, :file
 
+  sig { params(name: String).void }
   def initialize(name:)
     @name = name
     @file = false
     @size = 0
     @parent = nil
-    @children = []
+    @children = T.let([], T::Array[Node])
   end
 
+  sig { params(line: String).returns(T.attached_class) }
   def self.from_line(line)
     item, name = line.split
-    node = new(name: name)
+    node = new(name: T.must(name))
 
-    item.match(/\d+/) do
+    T.must(item).match(/\d+/) do
       node.size = item.to_i
       node.file = true
     end
@@ -25,33 +35,40 @@ class Node
     node
   end
 
+  sig { returns(T::Boolean) }
   def dir?
     !file
   end
 
+  sig { params(node: Node).returns(T.self_type) }
   def insert(node)
-    return unless dir?
+    return node unless dir?
 
     node.parent = self
     @children.push(node)
     @size += node.size
     parent.size += @size if parent
+
+    self
   end
 
+  sig { params(indent_level: Integer).void }
   def pretty_print(indent_level = 0)
     puts "#{" " * indent_level}- #{@name} (#{dir? ? "dir" : "file"}, size=#{@size})"
-    @children.each do |child|
-      child.pretty_print(indent_level + 2)
-    end
+    @children.each { |child| child.pretty_print(indent_level + 2) }
+    nil
   end
 end
 
 class Day7
+  extend T::Sig
+
   DEVICE_STORAGE = 70_000_000
   NEEDED_STORAGE = 30_000_000
 
+  sig { params(command_file: String).void }
   def initialize(command_file)
-    @command_lines = File.readlines(command_file, chomp: true).slice(1..)
+    @command_lines = T.must(File.readlines(command_file, chomp: true).slice(1..))
 
     @root_node = Node.new(name: "/")
 
@@ -60,15 +77,15 @@ class Day7
       next if line == "$ ls"
 
       if line == "$ cd .."
-        node = node.parent
+        node = T.cast(node.parent, Node)
         node.size = node.children.sum(&:size)
         next
       elsif line.start_with?("$ cd")
         _, _, dir_name = line.split
         if (child = node.children.find { _1.name == dir_name })
-          node = child
+          node = T.must(child)
         else
-          new_node = Node.new(name: dir_name)
+          new_node = Node.new(name: T.must(dir_name))
           node.insert(new_node)
           node = new_node
         end
