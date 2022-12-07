@@ -58,6 +58,21 @@ class Node
     @children.each { |child| child.pretty_print(indent_level + 2) }
     nil
   end
+
+  sig do
+    params(
+      check: T.proc.params(arg0: Node).returns(T::Boolean),
+      dirs: T::Array[Integer]
+    ).returns(T::Array[Integer])
+  end
+  def collect_children(check, dirs = [])
+    if dir?
+      dirs.push(size) if check.call(self)
+      children.each_with_object(dirs) { |child, arr| child.collect_children(check, arr) }
+    else
+      dirs
+    end
+  end
 end
 
 class Day7
@@ -102,23 +117,12 @@ class Day7
   end
 
   def part_one
-    collect_children(@root_node, ->(node) { node.size <= 100_000 }).sum
+    @root_node.collect_children(->(node) { node.size <= 100_000 }).sum
   end
 
   def part_two
     free_space = DEVICE_STORAGE - @root_node.size
     min_size_to_remove = NEEDED_STORAGE - free_space
-    collect_children(@root_node, ->(node) { node.size > min_size_to_remove }).min
-  end
-
-  private
-
-  def collect_children(node, check, dirs = [])
-    if node.dir?
-      dirs.push(node.size) if check.call(node)
-      node.children.each_with_object(dirs) { |child, arr| collect_children(child, check, arr) }
-    else
-      dirs
-    end
+    @root_node.collect_children(->(node) { node.size > min_size_to_remove }).min
   end
 end
