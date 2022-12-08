@@ -8,47 +8,56 @@ class Day2
 
   Strategy = T.type_alias { T::Array[T::Array[String]] }
 
-  MOVE_MAPPING = T.let({
-    "X" => 1,
-    "Y" => 2,
-    "Z" => 3
-  }.freeze, T::Hash[String, Integer])
+  MOVE_MAPPING = T.let(
+    {
+      "X" => 1,
+      "Y" => 2,
+      "Z" => 3
+    }.freeze,
+    T::Hash[String, Integer]
+  )
 
-  SCORE_MAPPING = T.let({
-    "X" => {
-      "A" => 3,
-      "B" => 0,
-      "C" => 6,
-    },
-    "Y" => {
-      "A" => 6,
-      "B" => 3,
-      "C" => 0,
-    },
-    "Z" => {
-      "A" => 0,
-      "B" => 6,
-      "C" => 3,
-    }
-  }.freeze, T::Hash[String, T::Hash[String, Integer]])
+  SCORE_MAPPING = T.let(
+    {
+      "X" => {
+        "A" => 3,
+        "B" => 0,
+        "C" => 6
+      },
+      "Y" => {
+        "A" => 6,
+        "B" => 3,
+        "C" => 0
+      },
+      "Z" => {
+        "A" => 0,
+        "B" => 6,
+        "C" => 3
+      }
+    }.freeze,
+    T::Hash[String, T::Hash[String, Integer]]
+  )
 
-  REQUIRED_MOVE = T.let({
-    "A" => {
-      "X" => "Z",
-      "Y" => "X",
-      "Z" => "Y",
-    },
-    "B" => {
-      "X" => "X",
-      "Y" => "Y",
-      "Z" => "Z",
-    },
-    "C" => {
-      "X" => "Y",
-      "Y" => "Z",
-      "Z" => "X",
-    }
-  }.freeze, T::Hash[String, T::Hash[String, String]])
+  REQUIRED_MOVE = T.let(
+    {
+      "A" => {
+        "X" => "Z",
+        "Y" => "X",
+        "Z" => "Y"
+      },
+      "B" => {
+        "X" => "X",
+        "Y" => "Y",
+        "Z" => "Z"
+      },
+      "C" => {
+        "X" => "Y",
+        "Y" => "Z",
+        "Z" => "X"
+      }
+    }.freeze,
+    T::Hash[String, T::Hash[String, String]]
+  )
 
   sig { params(strategy_file: String).void }
   def initialize(strategy_file)

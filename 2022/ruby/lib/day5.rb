@@ -16,7 +16,8 @@ class Day5
         .map do |row|
           row.chars.each_slice(4).map { |slice| slice.join.strip }
         end
-        .transpose.map { |col| col.reject { _1 == "" } },
+        .transpose
+        .map { |col| col.reject { _1 == "" } },
       T::Array[T::Array[String]]
     )
     @instructions = T.must(instructions).map do |instruction|
