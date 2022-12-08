@@ -15,14 +15,14 @@ class Day8
     # Take away 4 to not double count the corners
     visible_trees = T.let(((@map.row_count + @map.column_count) * 2) - 4, Integer)
     inner_indices = T.let(1..(@map.row_count - 2), T::Range[Integer])
+
     inner_indices.each do |i|
       inner_indices.each do |j|
         tree = T.let(@map[i, j], Integer)
+        row = T.let(@map.row(i), Vector)
+        column = T.let(@map.column(j), Vector)
         visible = T.let(
-          @map.row(i)[...j].max < tree ||
-            @map.row(i)[j + 1..].max < tree ||
-            @map.column(j)[...i].max < tree ||
-            @map.column(j)[i + 1..].max < tree,
+          row[...j].max < tree || row[j + 1..].max < tree || column[...i].max < tree || column[i + 1..].max < tree,
           T::Boolean
         )
         visible_trees += 1 if visible
