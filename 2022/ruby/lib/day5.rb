@@ -41,8 +41,8 @@ class Day5
   def sort_crates(reverse:)
     cargo_columns = @cargo_columns.dup
     @instructions.each do |(num, from, to)|
-      crates = T.must(cargo_columns[from.to_i - 1]).shift(num.to_i)
-      cargo_columns[to.to_i - 1].unshift(*(reverse ? crates.reverse : crates))
+      crates = T.must(cargo_columns[from - 1]).shift(num)
+      cargo_columns[to - 1].unshift(*(reverse ? crates.reverse : crates))
     end
 
     cargo_columns.map { |col| T.must(col.first).delete("[]") }.join
