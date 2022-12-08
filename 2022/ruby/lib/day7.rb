@@ -54,7 +54,7 @@ class Node
 
   sig { params(indent_level: Integer).void }
   def pretty_print(indent_level = 0)
-    puts "#{" " * indent_level}- #{@name} (#{dir? ? "dir" : "file"}, size=#{@size})"
+    puts("#{" " * indent_level}- #{@name} (#{dir? ? "dir" : "file"}, size=#{@size})")
     @children.each { |child| child.pretty_print(indent_level + 2) }
     nil
   end
@@ -104,6 +104,7 @@ class Day7
           node.insert(new_node)
           node = new_node
         end
+
         next
       end
 
@@ -117,12 +118,12 @@ class Day7
   end
 
   def part_one
-    @root_node.collect_children(->(node) { node.size <= 100_000 }).sum
+    @root_node.collect_children(-> (node) { node.size <= 100_000 }).sum
   end
 
   def part_two
     free_space = DEVICE_STORAGE - @root_node.size
     min_size_to_remove = NEEDED_STORAGE - free_space
-    @root_node.collect_children(->(node) { node.size > min_size_to_remove }).min
+    @root_node.collect_children(-> (node) { node.size > min_size_to_remove }).min
   end
 end

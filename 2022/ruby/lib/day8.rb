@@ -19,8 +19,10 @@ class Day8
       inner_indices.each do |j|
         tree = T.let(@map[i, j], Integer)
         visible = T.let(
-          @map.row(i)[...j].max < tree || @map.row(i)[j+1..].max < tree ||
-          @map.column(j)[...i].max < tree || @map.column(j)[i+1..].max < tree,
+          @map.row(i)[...j].max < tree ||
+            @map.row(i)[j + 1..].max < tree ||
+            @map.column(j)[...i].max < tree ||
+            @map.column(j)[i + 1..].max < tree,
           T::Boolean
         )
         visible_trees += 1 if visible
@@ -38,9 +40,9 @@ class Day8
       column = T.let(@map.column(j), Vector)
 
       left = calculate_score(row[...j].reverse, tree)
-      right = calculate_score(row[j+1..], tree)
+      right = calculate_score(row[j + 1..], tree)
       up = calculate_score(column[...i].reverse, tree)
-      down = calculate_score(column[i+1..], tree)
+      down = calculate_score(column[i + 1..], tree)
 
       score = left * right * up * down
       scenic_score = score if score > scenic_score

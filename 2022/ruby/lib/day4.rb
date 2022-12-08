@@ -9,11 +9,14 @@ class Day4
 
   sig { params(zones_file: String).void }
   def initialize(zones_file)
-    @zones = T.let(CSV.readlines(zones_file).map do |(elf1, elf2)|
-      elf1_range = Range.new(*elf1.split("-").map(&:to_i))
-      elf2_range = Range.new(*elf2.split("-").map(&:to_i))
-      [elf1_range, elf2_range]
-    end, T::Array[[T::Range[Integer], T::Range[Integer]]])
+    @zones = T.let(
+      CSV.readlines(zones_file).map do |(elf1, elf2)|
+        elf1_range = Range.new(*elf1.split("-").map(&:to_i))
+        elf2_range = Range.new(*elf2.split("-").map(&:to_i))
+        [elf1_range, elf2_range]
+      end,
+      T::Array[[T::Range[Integer], T::Range[Integer]]]
+    )
   end
 
   sig { returns(Integer) }
