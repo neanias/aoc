@@ -13,11 +13,16 @@ class Day9
       File.readlines(movements_file, chomp: true).map do |line|
         direction, steps = line.split
         d_vec = case direction
-        when "U" then Vector[0,1]
-        when "D" then Vector[0,-1]
-        when "R" then Vector[1,0]
-        when "L" then Vector[-1,0]
+        when "U"
+          Vector[0, 1]
+        when "D"
+          Vector[0, -1]
+        when "R"
+          Vector[1, 0]
+        when "L"
+          Vector[-1, 0]
         end
+
         [d_vec, steps.to_i]
       end,
       T::Array[[String, Integer]]
@@ -26,17 +31,17 @@ class Day9
   end
 
   def part_one
-    calculate_path([Vector[0,0], Vector[0,0]])
+    calculate_path([Vector[0, 0], Vector[0, 0]])
   end
 
   def part_two
-    calculate_path(Array.new(10, Vector[0,0]))
+    calculate_path(Array.new(10, Vector[0, 0]))
   end
 
   private
 
   def calculate_path(knots)
-    t_history = Set.new([Vector[0,0]])
+    t_history = Set.new([Vector[0, 0]])
 
     @movements.each do |(direction, steps)|
       steps.times do
@@ -67,6 +72,6 @@ class Day9
 
   sig { params(h_pos: Vector, t_pos: Vector).returns(Vector) }
   def move_to(h_pos, t_pos)
-    (h_pos - t_pos).map { |x| x.zero? ? 0 : x/x.abs }
+    (h_pos - t_pos).map { |x| x.zero? ? 0 : x / x.abs }
   end
 end
