@@ -12,7 +12,13 @@ class Day9
     movements = T.cast(
       File.readlines(movements_file, chomp: true).map do |line|
         direction, steps = line.split
-        [direction, steps.to_i]
+        d_vec = case direction
+        when "U" then Vector[0,1]
+        when "D" then Vector[0,-1]
+        when "R" then Vector[1,0]
+        when "L" then Vector[-1,0]
+        end
+        [d_vec, steps.to_i]
       end,
       T::Array[[String, Integer]]
     )
@@ -29,18 +35,12 @@ class Day9
 
   private
 
-  sig { params(knots: T::Array[Vector]).returns(Integer) }
   def calculate_path(knots)
     t_history = Set.new([Vector[0,0]])
 
     @movements.each do |(direction, steps)|
       steps.times do
-        case direction
-        when "U" then knots[0] += Vector[0,1]
-        when "D" then knots[0] -= Vector[0,1]
-        when "R" then knots[0] += Vector[1,0]
-        when "L" then knots[0] -= Vector[1,0]
-        end
+        knots[0] += direction
 
         range = 0...knots.size
         range.each_cons(2) do |(left_idx, right_idx)|
