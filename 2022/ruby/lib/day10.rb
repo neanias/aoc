@@ -12,6 +12,7 @@ class Day10
       command, num = line.split
       [command, num.to_i]
     end
+
     @changes = T.let(programme.flat_map { |(command, arg)| command == "noop" ? [0] : [0, arg] }, T::Array[Integer])
   end
 
