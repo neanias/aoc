@@ -61,6 +61,7 @@ GEM
     sorbet-runtime (0.5.10577)
     sorbet-static (0.5.10577-universal-darwin-20)
     sorbet-static (0.5.10577-universal-darwin-21)
+    sorbet-static (0.5.10577-universal-darwin-22)
     sorbet-static-and-runtime (0.5.10577)
       sorbet (= 0.5.10577)
       sorbet-runtime (= 0.5.10577)
@@ -91,6 +92,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-21
+  arm64-darwin-22
   x86_64-darwin-20
 
 DEPENDENCIES
