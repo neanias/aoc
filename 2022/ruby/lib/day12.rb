@@ -4,6 +4,9 @@
 require "matrix"
 require "set"
 
+require "async"
+require "async/barrier"
+
 class Day12
   class Node
     attr_accessor :parent
@@ -42,6 +45,30 @@ class Day12
 
   def part_one
     find_shortest_path(@starting_node)
+  end
+
+  # No noticeable speed increase
+  def part_two_async
+    starting_points = [@starting_node.position]
+    @elevation_map.each_with_index do |letter, x, y|
+      next unless letter == "a"
+
+      starting_points.push([x, y])
+    end
+
+    barrier = Async::Barrier.new
+    paths = []
+    Async do
+      starting_points.each do |point|
+        barrier.async do
+          paths.append(find_shortest_path(Node.new(letter: "a", position: point)))
+        end
+      end
+
+      barrier.wait
+    end
+
+    paths.reject(&:zero?).min
   end
 
   def part_two

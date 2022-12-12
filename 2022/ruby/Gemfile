@@ -16,3 +16,5 @@ gem "sorbet-runtime"
 gem "tapioca", require: false, group: :development
 
 gem "matrix", "~> 0.4.2"
+
+gem "async", "~> 2.3"
