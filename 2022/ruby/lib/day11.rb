@@ -38,14 +38,9 @@ class Monkey
 
   sig { params(operation: String).returns(Operation) }
   def self.operation_to_lambda(operation)
-    lhs, sign, rhs = operation.split
+    _lhs, sign, rhs = operation.split
     operator = sign == "+" ? :+ : :*
-    # both old
-    if lhs == rhs
-      -> (old) { old.send(operator, old) }
-    else
-      -> (old) { old.send(operator, rhs.to_i) }
-    end
+    -> (old) { old.send(operator, rhs == "old" ? old : rhs.to_i) }
   end
 
   sig { params(part_one: T::Boolean, divisor: Integer).returns(T::Array[[Integer, Integer]]) }
