@@ -27,7 +27,7 @@ class Node
     item, name = line.split
     node = new(name: T.must(name))
 
-    T.must(item).match(/\d+/) do
+    if item != "dir"
       node.size = item.to_i
       node.file = true
     end
