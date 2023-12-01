@@ -24,13 +24,11 @@ class Day1
       "eight" => 8,
       "nine" => 9
     }
-    nums_regex = /#{nums_in_words.keys.join("|")}|\d/
+    nums_regex = /(?=(#{nums_in_words.keys.join("|")}|\d))/
 
     @calibrations.sum do |line|
-      first = line.scan(nums_regex)[0]
-      last_index = line.rindex(nums_regex)
-      last = line[last_index..].scan(nums_regex)[0]
-      "#{nums_in_words[first] || first}#{nums_in_words[last] || last}".to_i
+      nums = line.scan(nums_regex).flatten
+      "#{nums_in_words[nums[0]] || nums[0]}#{nums_in_words[nums[-1]] || nums[-1]}".to_i
     end
   end
 end
