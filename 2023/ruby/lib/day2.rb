@@ -16,19 +16,16 @@ class Day2
   def part_one
     @games.each_with_index.sum do |game, idx|
       if game.any? { _1["red"] > 12 || _1["green"] > 13 || _1["blue"] > 14 }
-        next 0
+        0
+      else
+        idx + 1
       end
-
-      idx + 1
     end
   end
 
   def part_two
     @games.sum do |game|
-      blues = game.max_by { _1["blue"] }["blue"]
-      reds = game.max_by { _1["red"] }["red"]
-      greens = game.max_by { _1["green"] }["green"]
-      blues * reds * greens
+      ["red", "blue", "green"].reduce(1) { |acc, colour| acc * game.max_by { _1[colour] }[colour] }
     end
   end
 end
