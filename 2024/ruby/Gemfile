@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+gem "rspec", require: false
+gem "standard", group: [:development, :test]
+
+gem "ruby-lsp", require: false, group: :development
+
+gem "matrix"
+gem "debug"
