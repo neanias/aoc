@@ -9,3 +9,4 @@ gem "ruby-lsp", require: false, group: :development
 
 gem "matrix"
 gem "debug"
+gem "parallel"

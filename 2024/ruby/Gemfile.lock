@@ -88,6 +88,7 @@ PLATFORMS
 DEPENDENCIES
   debug
   matrix
+  parallel
   rspec
   ruby-lsp
   standard
