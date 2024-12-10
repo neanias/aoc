@@ -20,56 +20,46 @@ class Day7
         next true
       end
 
-      operands = line.operands
-      operators = [:+, :*] * (operands.length - 1)
-      op_permutations = operators.permutation(operands.length - 1)
-      op_permutations.any? { |permutation| calculate(operands.zip(permutation).flatten[..-2]) == line.total }
-
-      # valid_lines << line if permutations.any? { calculate(_1) == line.total }
+      head, *tail = line.operands
+      check_permutations(line.total, head, tail)
     end.sum(&:total)
-
-    # valid_lines.sum(&:total)
   end
 
-  def part_one_parallel
-    results = Parallel.map(@lines, in_processes: 4) { run_loop(_1) }
+  def part_two
+    @lines.select do |line|
+      if line.operands.reduce(:*) == line.total ||
+          line.operands.sum == line.total ||
+          line.operands.map(&:to_s).join.to_i == line.total
+        next true
+      end
 
-    results.reject { _1.nil? }.sum(&:total)
+      head, *tail = line.operands
+      check_permutations_concat(line.total, head, tail)
+    end.sum(&:total)
   end
 
-  def run_loop(line)
-    puts "Processing line: #{line}"
-    if line.operands.reduce(:*) == line.total || line.operands.sum == line.total
-      puts "#{line} is good with product or sum"
-      return line
-    elsif line.operands.reduce(:*) < line.total
-      puts "#{line} product is smaller than total"
-      return nil
-    end
+  def check_permutations(total, current, operands)
+    head, *tail = operands
+    return false if current > total
 
-    operands = line.operands
-    operators = [:+, :*] * (operands.length - 1)
-    op_permutations = operators.permutation(operands.length - 1)
-    if op_permutations.any? { |permutation| calculate(operands.zip(permutation).flatten[..-2]) == line.total }
-      puts "#{line} is good"
-      return line
-    end
+    plus = current + head
+    times = current * head
 
-    # if permutations.any? { calculate(_1) == line.total }
-    #   puts "#{line} is good"
-    #   return line
-    # end
-    nil
+    return true if (plus == total || times == total) && tail.empty?
+    return false if tail.empty?
+    check_permutations(total, plus, tail) || check_permutations(total, times, tail)
   end
 
-  def calculate(arr)
-    return arr[0] if arr.length == 1
+  def check_permutations_concat(total, current, operands)
+    head, *tail = operands
+    return false if current > total
 
-    arr => [l, op, r, *rest]
-    new_l = l.send(op, r)
-    calculate([new_l, *rest])
+    plus = current + head
+    times = current * head
+    concat = "#{current}#{head}".to_i
+
+    return true if (plus == total || times == total || concat == total) && tail.empty?
+    return false if tail.empty?
+    check_permutations_concat(total, plus, tail) || check_permutations_concat(total, times, tail) || check_permutations_concat(total, concat, tail)
   end
 end
-
-day7 = Day7.new("inputs/day7.txt")
-day7.part_one_parallel
