@@ -59,12 +59,8 @@ class Day14
 
   def part_two
     robots = @robots.map { _1.dup }
-    100.times do |second|
-      if second % 5 == 0
-        render_robots(robots)
-        puts "Second #{second}"
-      end
-
+    factors = {}
+    10402.times do |second|
       robots.length.times do |i|
         robot = robots[i]
         pos = robot.position
@@ -82,7 +78,26 @@ class Day14
 
         robots[i].position = pos
       end
+
+      quadrants = Hash.new(0)
+      robots.each do |robot|
+        mid_width = @width / 2
+        mid_height = @height / 2
+        if robot.position[0] < mid_width && robot.position[1] < mid_height
+          quadrants[:tl] += 1
+        elsif robot.position[0] < mid_width && robot.position[1] > mid_height
+          quadrants[:bl] += 1
+        elsif robot.position[0] > mid_width && robot.position[1] < mid_height
+          quadrants[:tr] += 1
+        elsif robot.position[0] > mid_width && robot.position[1] > mid_height
+          quadrants[:br] += 1
+        end
+      end
+
+      factors[second + 1] = quadrants.values.reduce(:*)
     end
+
+    factors.min_by { |_, v| v }
   end
 
   def render_robots(robots)
