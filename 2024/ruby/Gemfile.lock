@@ -19,6 +19,7 @@ GEM
     parser (3.3.6.0)
       ast (~> 2.4.1)
       racc
+    pqueue (2.1.0)
     prism (1.2.0)
     psych (5.2.0)
       stringio
@@ -89,6 +90,7 @@ DEPENDENCIES
   debug
   matrix
   parallel
+  pqueue (~> 2.1)
   rspec
   ruby-lsp
   standard
