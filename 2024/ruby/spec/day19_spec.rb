@@ -12,4 +12,10 @@ RSpec.describe Day19 do
 
     it { is_expected.to eq(6) }
   end
+
+  describe "#part_two" do
+    subject(:part_two) { day19.part_two }
+
+    it { is_expected.to eq(16) }
+  end
 end
