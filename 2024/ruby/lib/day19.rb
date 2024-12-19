@@ -8,20 +8,7 @@ class Day19
   end
 
   def part_one
-    sorted_available = @available.sort { _2.length <=> _1.length }
-    @patterns.count do |pattern|
-      rolling_pattern = pattern.dup
-      possible = false
-      sorted_available.each do |towel|
-        if pattern.include?(towel)
-          rolling_pattern.gsub!(towel, "")
-          if rolling_pattern.empty?
-            possible = true
-            break
-          end
-        end
-      end
-      possible
-    end
+    @patterns.count { _1.match?(/^#{Regexp.union(@available)}+$/) }
+  end
   end
 end
