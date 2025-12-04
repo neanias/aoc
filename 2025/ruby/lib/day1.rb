@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-def part_1(instructions)
+def day_1_part_1(instructions)
   starting_point = 50
 
   instructions.each_line(chomp: true).count do |inst|
@@ -11,7 +11,7 @@ def part_1(instructions)
   end
 end
 
-def part_2(instructions, debug = false)
+def day_1_part_2(instructions, debug = false)
   starting_point = 50
 
   instructions.each_line(chomp: true).sum do |inst|

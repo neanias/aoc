@@ -18,11 +18,13 @@ class TestDay1 < Minitest::Test
     L82
   INST
 
+  parallelize_me!
+
   def test_part_1
-    assert_equal part_1(INSTRUCTIONS), 3
+    assert_equal day_1_part_1(INSTRUCTIONS), 3
   end
 
   def test_part_2
-    assert_equal part_2(INSTRUCTIONS), 6
+    assert_equal day_1_part_2(INSTRUCTIONS), 6
   end
 end
