@@ -1,0 +1,14 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+gem "awesome_print", "~> 1.9.2"
+gem "pry", "~> 0.14.2"
+
+gem "rspec", "~> 3.12.0", require: false
+gem "standard", group: [:development, :test]
+
+gem "ruby-lsp", require: false, group: :development
+
+gem "matrix", "~> 0.4.2"
+gem "debug"

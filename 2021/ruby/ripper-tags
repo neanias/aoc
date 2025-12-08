@@ -1,0 +1,77 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+CLOSING_BRACKETS	lib/day10.rb	/^  CLOSING_BRACKETS = PAIRS.values.freeze$/;"	C	class:Day10
+Day1	lib/day1.rb	/^class Day1$/;"	c
+Day10	lib/day10.rb	/^class Day10$/;"	c
+Day11	lib/day11.rb	/^class Day11$/;"	c
+Day12	lib/day12.rb	/^class Day12$/;"	c
+Day14	lib/day14.rb	/^class Day14$/;"	c
+Day2	lib/day2.rb	/^class Day2$/;"	c
+Day21	lib/day21.rb	/^class Day21$/;"	c
+Day3	lib/day3.rb	/^class Day3$/;"	c
+Day4	lib/day4.rb	/^class Day4$/;"	c
+Day5	lib/day5.rb	/^class Day5$/;"	c
+Day6	lib/day6.rb	/^class Day6$/;"	c
+Day7	lib/day7.rb	/^class Day7$/;"	c
+Day8	lib/day8.rb	/^class Day8$/;"	c
+Day9	lib/day9.rb	/^class Day9$/;"	c
+OPENING_BRACKETS	lib/day10.rb	/^  OPENING_BRACKETS = PAIRS.keys.freeze$/;"	C	class:Day10
+PAIRS	lib/day10.rb	/^  PAIRS = {$/;"	C	class:Day10
+big_cave?	lib/day12.rb	/^  def big_cave?(location) = location >= "A" && location <= "Z"$/;"	f	class:Day12
+chunks	lib/day10.rb	/^  attr_reader :chunks$/;"	f	class:Day10
+columns	lib/day3.rb	/^  def columns(diagnostics)$/;"	f	class:Day3
+count_increasing_slices	lib/day1.rb	/^  def count_increasing_slices(depths)$/;"	f	class:Day1
+expand_basin	lib/day9.rb	/^  def expand_basin(starting_position)$/;"	f	class:Day9
+find_low_points	lib/day9.rb	/^  def find_low_points$/;"	f	class:Day9
+generate_input_path	spec/spec_helper.rb	/^def generate_input_path(filename)$/;"	f	class:Object
+initialize	lib/day1.rb	/^  def initialize(readings_file)$/;"	f	class:Day1
+initialize	lib/day10.rb	/^  def initialize(chunks_file)$/;"	f	class:Day10
+initialize	lib/day11.rb	/^  def initialize(octopus_file)$/;"	f	class:Day11
+initialize	lib/day12.rb	/^  def initialize(map)$/;"	f	class:Day12
+initialize	lib/day14.rb	/^  def initialize(polymer_file)$/;"	f	class:Day14
+initialize	lib/day2.rb	/^  def initialize(commands_file)$/;"	f	class:Day2
+initialize	lib/day21.rb	/^  def initialize(starting_positions_file)$/;"	f	class:Day21
+initialize	lib/day3.rb	/^  def initialize(diagnostic_file)$/;"	f	class:Day3
+initialize	lib/day4.rb	/^  def initialize(bingo_file)$/;"	f	class:Day4
+initialize	lib/day5.rb	/^  def initialize(lines_file)$/;"	f	class:Day5
+initialize	lib/day6.rb	/^  def initialize(fish_file)$/;"	f	class:Day6
+initialize	lib/day7.rb	/^  def initialize(crabs_file)$/;"	f	class:Day7
+initialize	lib/day8.rb	/^  def initialize(digits_file)$/;"	f	class:Day8
+initialize	lib/day9.rb	/^  def initialize(heightmap_file)$/;"	f	class:Day9
+mean	lib/day7.rb	/^  def mean(array)$/;"	f	class:Day7
+median	lib/day7.rb	/^  def median(array)$/;"	f	class:Day7
+minmax_of_columns	lib/day3.rb	/^  def minmax_of_columns(columns)$/;"	f	class:Day3
+neighbours	lib/day11.rb	/^  def neighbours(row, column, matrix)$/;"	f	class:Day11
+neighbours	lib/day9.rb	/^  def neighbours(row, column)$/;"	f	class:Day9
+output_map	lib/day8.rb	/^  def output_map(inputs)$/;"	f	class:Day8
+part_one	lib/day1.rb	/^  def part_one$/;"	f	class:Day1
+part_one	lib/day10.rb	/^  def part_one$/;"	f	class:Day10
+part_one	lib/day11.rb	/^  def part_one$/;"	f	class:Day11
+part_one	lib/day12.rb	/^  def part_one$/;"	f	class:Day12
+part_one	lib/day14.rb	/^  def part_one$/;"	f	class:Day14
+part_one	lib/day2.rb	/^  def part_one$/;"	f	class:Day2
+part_one	lib/day21.rb	/^  def part_one$/;"	f	class:Day21
+part_one	lib/day3.rb	/^  def part_one$/;"	f	class:Day3
+part_one	lib/day4.rb	/^  def part_one$/;"	f	class:Day4
+part_one	lib/day5.rb	/^  def part_one$/;"	f	class:Day5
+part_one	lib/day6.rb	/^  def part_one$/;"	f	class:Day6
+part_one	lib/day7.rb	/^  def part_one$/;"	f	class:Day7
+part_one	lib/day8.rb	/^  def part_one$/;"	f	class:Day8
+part_one	lib/day9.rb	/^  def part_one$/;"	f	class:Day9
+part_three	lib/day10.rb	/^  alias :part_three :part_one$/;"	a	class:Day10
+part_two	lib/day1.rb	/^  def part_two$/;"	f	class:Day1
+part_two	lib/day10.rb	/^  def part_two$/;"	f	class:Day10
+part_two	lib/day11.rb	/^  def part_two$/;"	f	class:Day11
+part_two	lib/day14.rb	/^  def part_two$/;"	f	class:Day14
+part_two	lib/day2.rb	/^  def part_two$/;"	f	class:Day2
+part_two	lib/day3.rb	/^  def part_two$/;"	f	class:Day3
+part_two	lib/day4.rb	/^  def part_two$/;"	f	class:Day4
+part_two	lib/day5.rb	/^  def part_two$/;"	f	class:Day5
+part_two	lib/day6.rb	/^  def part_two$/;"	f	class:Day6
+part_two	lib/day7.rb	/^  def part_two$/;"	f	class:Day7
+part_two	lib/day8.rb	/^  def part_two$/;"	f	class:Day8
+part_two	lib/day9.rb	/^  def part_two$/;"	f	class:Day9
+rating	lib/day3.rb	/^  def rating(diagnostics, idx: 0, direction: 0)$/;"	f	class:Day3
+small_cave?	lib/day12.rb	/^  def small_cave?(location) = location >= "a" && location <= "z"$/;"	f	class:Day12
+test	lib/day10.rb	/^  def self.test(foo)$/;"	F	class:Day10
+triangle	lib/day7.rb	/^  def triangle(num)$/;"	f	class:Day7
